@@ -22,7 +22,7 @@ use bevy::{
 
 use crate::{
     render::extract::TilemapInstances,
-    tilemap::map::{TilemapTextures, WaitForTextureUsageChange},
+    tilemap::map::{TilemapTextures, TilemapTexturesHandle, WaitForTextureUsageChange},
 };
 
 #[derive(Resource, Default)]
@@ -54,7 +54,7 @@ impl TilemapTexturesStorage {
 
 pub fn set_texture_usage(
     mut commands: Commands,
-    tilemaps_query: Query<(Entity, &Handle<TilemapTextures>), With<WaitForTextureUsageChange>>,
+    tilemaps_query: Query<(Entity, &TilemapTexturesHandle), With<WaitForTextureUsageChange>>,
     mut image_assets: ResMut<Assets<Image>>,
     textures_assets: Res<Assets<TilemapTextures>>,
 ) {

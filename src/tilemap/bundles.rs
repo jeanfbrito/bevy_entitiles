@@ -1,6 +1,6 @@
 use bevy::{
     asset::Handle,
-    ecs::bundle::Bundle,
+    ecs::{bundle::Bundle, component::Component},
     render::view::{InheritedVisibility, ViewVisibility, Visibility},
 };
 
@@ -9,7 +9,7 @@ use crate::{
     tilemap::map::{
         TilePivot, TileRenderSize, TilemapAabbs, TilemapAnimations, TilemapAxisFlip,
         TilemapLayerOpacities, TilemapName, TilemapSlotSize, TilemapStorage, TilemapTextures,
-        TilemapTransform, TilemapType, WaitForTextureUsageChange,
+        TilemapTexturesHandle, TilemapTransform, TilemapType, WaitForTextureUsageChange,
     },
 };
 
@@ -47,7 +47,10 @@ impl Into<StandardTilemapBundle> for DataTilemapBundle {
 
 /// The bundle of the tilemap with a texture and custom material.
 #[derive(Bundle, Default, Debug, Clone)]
-pub struct MaterialTilemapBundle<M: TilemapMaterial> {
+pub struct MaterialTilemapBundle<M: TilemapMaterial>
+where
+    Handle<M>: Component,
+{
     pub name: TilemapName,
     pub tile_render_size: TileRenderSize,
     pub slot_size: TilemapSlotSize,
@@ -58,7 +61,7 @@ pub struct MaterialTilemapBundle<M: TilemapMaterial> {
     pub transform: TilemapTransform,
     pub axis_flip: TilemapAxisFlip,
     pub material: Handle<M>,
-    pub textures: Handle<TilemapTextures>,
+    pub textures: TilemapTexturesHandle,
     pub animations: TilemapAnimations,
     pub visibility: Visibility,
     pub inherited_visibility: InheritedVisibility,
@@ -80,7 +83,7 @@ pub struct StandardTilemapBundle {
     pub transform: TilemapTransform,
     pub axis_flip: TilemapAxisFlip,
     pub material: Handle<StandardTilemapMaterial>,
-    pub textures: Handle<TilemapTextures>,
+    pub textures: TilemapTexturesHandle,
     pub animations: TilemapAnimations,
     pub visibility: Visibility,
     pub inherited_visibility: InheritedVisibility,
@@ -127,7 +130,10 @@ impl Into<StandardPureColorTilemapBundle> for StandardTilemapBundle {
 /// The bundle of the tilemap without a texture and with a custom material.
 /// This can be cheaper.
 #[derive(Bundle, Default, Debug, Clone)]
-pub struct PureColorTilemapBundle<M: TilemapMaterial> {
+pub struct PureColorTilemapBundle<M: TilemapMaterial>
+where
+    Handle<M>: Component,
+{
     pub name: TilemapName,
     pub tile_render_size: TileRenderSize,
     pub slot_size: TilemapSlotSize,
@@ -167,7 +173,7 @@ pub struct StandardPureColorTilemapBundle {
 impl StandardPureColorTilemapBundle {
     pub fn convert_to_texture_bundle(
         self,
-        textures: Handle<TilemapTextures>,
+        textures: TilemapTexturesHandle,
         animations: TilemapAnimations,
     ) -> StandardTilemapBundle {
         StandardTilemapBundle {

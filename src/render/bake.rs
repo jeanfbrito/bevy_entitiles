@@ -7,12 +7,11 @@ use bevy::{
         system::{Commands, Query, Res},
     },
     math::{IRect, IVec2, UVec2, Vec2, Vec4, Vec4Swizzles},
-    prelude::warn,
+    prelude::{warn, Image},
     reflect::Reflect,
     render::{
         render_asset::RenderAssetUsages,
         render_resource::{Extent3d, TextureDimension, TextureFormat},
-        texture::Image,
     },
 };
 
@@ -20,7 +19,7 @@ use crate::{
     tilemap::{
         map::{
             TileRenderSize, TilemapLayerOpacities, TilemapSlotSize, TilemapStorage, TilemapTexture,
-            TilemapTextures,
+            TilemapTextures, TilemapTexturesHandle,
         },
         tile::{Tile, TileFlip, TileLayer, TileTexture},
     },
@@ -53,7 +52,7 @@ pub fn tilemap_baker(
         &TilemapSlotSize,
         &mut TilemapStorage,
         &TilemapLayerOpacities,
-        &Handle<TilemapTextures>,
+        &TilemapTexturesHandle,
         &TilemapBaker,
     )>,
     tiles_query: Query<&Tile>,

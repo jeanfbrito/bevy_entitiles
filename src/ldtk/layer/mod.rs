@@ -8,8 +8,7 @@ use bevy::{
         system::{Commands, EntityCommands},
     },
     math::{IVec2, Vec2},
-    prelude::{Component, GlobalTransform, Visibility, InheritedVisibility, ViewVisibility},
-    render::texture::Image,
+    prelude::{Component, GlobalTransform, Visibility, InheritedVisibility, ViewVisibility, Image},
     sprite::Sprite,
     transform::components::Transform,
 };

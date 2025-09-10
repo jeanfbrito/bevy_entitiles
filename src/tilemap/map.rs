@@ -257,6 +257,24 @@ impl TilemapTextures {
     }
 }
 
+/// Component wrapper for Handle<TilemapTextures> to make it compatible with Bevy 0.16
+#[derive(Component, Debug, Clone)]
+pub struct TilemapTexturesHandle(pub Handle<TilemapTextures>);
+
+impl From<Handle<TilemapTextures>> for TilemapTexturesHandle {
+    fn from(handle: Handle<TilemapTextures>) -> Self {
+        Self(handle)
+    }
+}
+
+impl std::ops::Deref for TilemapTexturesHandle {
+    type Target = Handle<TilemapTextures>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
 /// A tilemap texture. It's similar to `TextureAtlas`.
 #[derive(Clone, Default, Debug, Reflect)]
 pub struct TilemapTexture {

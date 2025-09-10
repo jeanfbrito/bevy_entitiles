@@ -10,9 +10,9 @@ use bevy::{
         system::{Commands, NonSend, Query, Res, ResMut},
     },
     math::{IVec2, Vec2},
-    prelude::{EventReader, Local, GlobalTransform, Visibility, InheritedVisibility, ViewVisibility, error, info, warn},
+    prelude::{EventReader, Local, GlobalTransform, Visibility, InheritedVisibility, ViewVisibility, error, info, warn, Mesh2d},
     render::{mesh::Mesh, render_resource::Shader},
-    sprite::{Material2dPlugin, Mesh2d, MeshMaterial2d},
+    sprite::{Material2dPlugin, MeshMaterial2d},
     transform::components::Transform,
 };
 

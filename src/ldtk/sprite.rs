@@ -3,11 +3,9 @@ use std::collections::HashMap;
 use bevy::{
     asset::{Asset, Handle},
     math::{IVec2, IVec4, Vec2, Vec4},
+    prelude::Image,
     reflect::Reflect,
-    render::{
-        render_resource::{AsBindGroup, ShaderRef, ShaderType},
-        texture::Image,
-    },
+    render::render_resource::{AsBindGroup, ShaderRef, ShaderType},
     sprite::Material2d,
 };
 use serde::{Deserialize, Serialize};

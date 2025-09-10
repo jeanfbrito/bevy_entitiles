@@ -5,7 +5,7 @@ use bevy::{
     asset::{Asset, AssetApp, AssetId},
     color::LinearRgba,
     core_pipeline::core_2d::Transparent2d,
-    ecs::{system::SystemParamItem},
+    ecs::{component::Component, system::SystemParamItem},
     prelude::{Deref, DerefMut},
     reflect::TypePath,
     render::{
@@ -125,7 +125,7 @@ impl From<&StandardTilemapMaterial> for StandardTilemapUniform {
     }
 }
 
-#[derive(Default, Asset, AsBindGroup, TypePath, Clone)]
+#[derive(Default, Asset, AsBindGroup, TypePath, Clone, Component)]
 #[cfg_attr(feature = "serializing", derive(serde::Serialize, serde::Deserialize))]
 #[uniform(0, StandardTilemapUniform)]
 pub struct StandardTilemapMaterial {

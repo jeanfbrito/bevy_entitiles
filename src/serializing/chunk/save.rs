@@ -6,9 +6,10 @@ use bevy::{
         entity::{Entity, EntityHashMap},
         event::EventWriter,
         query::With,
-        system::{Commands, Query, Res, ResMut, Resource},
+        system::{Commands, Query, Res, ResMut},
     },
     math::{IVec2, UVec2},
+    prelude::Resource,
     reflect::Reflect,
 };
 

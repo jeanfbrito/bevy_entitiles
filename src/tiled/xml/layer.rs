@@ -3,9 +3,9 @@ use std::fmt::Formatter;
 use bevy::{
     ecs::system::EntityCommands,
     math::{IVec2, Vec2},
-    prelude::{Component, Deref, DerefMut, GlobalTransform, Visibility, InheritedVisibility, ViewVisibility},
+    prelude::{Component, Deref, DerefMut, GlobalTransform, Visibility, InheritedVisibility, ViewVisibility, Mesh2d},
     reflect::Reflect,
-    sprite::{Mesh2d, MeshMaterial2d},
+    sprite::MeshMaterial2d,
 };
 use serde::{
     de::{IgnoredAny, Visitor},

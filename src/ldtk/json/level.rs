@@ -1,8 +1,8 @@
 use bevy::{
     ecs::system::EntityCommands, 
-    prelude::{GlobalTransform, Visibility, InheritedVisibility, ViewVisibility},
+    prelude::{GlobalTransform, Visibility, InheritedVisibility, ViewVisibility, Mesh2d},
     reflect::Reflect, 
-    sprite::{Mesh2d, MeshMaterial2d},
+    sprite::MeshMaterial2d,
     transform::components::Transform,
 };
 use serde::{Deserialize, Serialize};
