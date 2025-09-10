@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use bevy::{
     asset::{Asset, Handle},
     math::{IVec2, IVec4, Vec2, Vec4},
@@ -7,7 +9,6 @@ use bevy::{
         texture::Image,
     },
     sprite::Material2d,
-    utils::HashMap,
 };
 use serde::{Deserialize, Serialize};
 

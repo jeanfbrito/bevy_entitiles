@@ -1,22 +1,23 @@
+use std::collections::{HashMap, HashSet};
+
 use bevy::{
     asset::{Assets, Handle},
     ecs::{
         entity::Entity,
         query::With,
-        system::{Commands, Query, Res, ResMut, Resource},
+        system::{Commands, Query, Res, ResMut},
     },
-    prelude::Image,
+    prelude::{Image, Resource},
     render::{
         render_asset::RenderAssets,
         render_resource::{
-            AddressMode, Extent3d, ImageCopyTexture, Origin3d, SamplerDescriptor, TextureAspect,
+            AddressMode, Extent3d, TexelCopyTextureInfo, Origin3d, SamplerDescriptor, TextureAspect,
             TextureDescriptor, TextureDimension, TextureFormat, TextureUsages,
             TextureViewDescriptor, TextureViewDimension,
         },
         renderer::{RenderDevice, RenderQueue},
-        texture::{BevyDefault, GpuImage},
+        texture::GpuImage,
     },
-    utils::{HashMap, HashSet},
 };
 
 use crate::{
@@ -233,7 +234,7 @@ pub fn queue_tilemap_textures(
             for index_y in 0..tile_count.y {
                 for index_x in 0..tile_count.x {
                     command_encoder.copy_texture_to_texture(
-                        ImageCopyTexture {
+                        TexelCopyTextureInfo {
                             texture: &raw_gpu_image.texture,
                             mip_level: 0,
                             origin: Origin3d {
@@ -243,7 +244,7 @@ pub fn queue_tilemap_textures(
                             },
                             aspect: TextureAspect::All,
                         },
-                        ImageCopyTexture {
+                        TexelCopyTextureInfo {
                             texture: &array_gpu_image.texture,
                             mip_level: 0,
                             origin: Origin3d {
@@ -384,13 +385,13 @@ pub fn queue_tilemap_textures(
             };
 
             command_encoder.copy_texture_to_texture(
-                ImageCopyTexture {
+                TexelCopyTextureInfo {
                     texture: &source.texture,
                     mip_level: 0,
                     origin: Origin3d::ZERO,
                     aspect: TextureAspect::All,
                 },
-                ImageCopyTexture {
+                TexelCopyTextureInfo {
                     texture: &destination.texture,
                     mip_level: 0,
                     origin: Origin3d {

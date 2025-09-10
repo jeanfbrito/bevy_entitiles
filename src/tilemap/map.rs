@@ -1,4 +1,4 @@
-use std::{f32::consts::SQRT_2, fmt::Debug};
+use std::{collections::{HashMap, HashSet}, f32::consts::SQRT_2, fmt::Debug};
 
 use bevy::{
     asset::{Asset, Handle},
@@ -14,9 +14,8 @@ use bevy::{
         render_asset::{PrepareAssetError, RenderAsset},
         render_resource::FilterMode,
     },
-    sprite::TextureAtlasLayout,
+    prelude::TextureAtlasLayout,
     transform::components::Transform,
-    utils::{HashMap, HashSet},
 };
 
 use crate::{

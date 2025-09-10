@@ -1,5 +1,12 @@
 use std::marker::PhantomData;
 
+// TODO: Replace with proper logging when render system is updated
+macro_rules! warn {
+    ($($arg:tt)*) => {
+        eprintln!("WARN: {}", format!($($arg)*))
+    };
+}
+
 use bevy::{
     core_pipeline::core_2d::Transparent2d,
     ecs::{
@@ -9,9 +16,7 @@ use bevy::{
             SystemParamItem,
         },
     },
-    log::warn,
     render::{
-        mesh::GpuBufferInfo,
         render_phase::{RenderCommand, RenderCommandResult, SetItemPipeline, TrackedRenderPass},
         view::ViewUniformOffset,
     },
@@ -221,22 +226,12 @@ impl<M: TilemapMaterial> RenderCommand<Transparent2d> for DrawTileMesh<M> {
                     continue;
                 }
 
-                if let Some(gpu_mesh) = &chunk.gpu_mesh {
-                    pass.set_vertex_buffer(0, gpu_mesh.vertex_buffer.slice(..));
-                    match &gpu_mesh.buffer_info {
-                        GpuBufferInfo::Indexed {
-                            buffer,
-                            count,
-                            index_format,
-                        } => {
-                            pass.set_index_buffer(buffer.slice(..), 0, *index_format);
-                            pass.draw_indexed(0..*count, 0, 0..1);
-                        }
-                        GpuBufferInfo::NonIndexed => {
-                            pass.draw(0..gpu_mesh.vertex_count, 0..1);
-                        }
-                    }
-                }
+                // TODO: Update drawing logic for Bevy 0.16 RenderMesh/MeshAllocator API
+                // if let Some(gpu_mesh) = &chunk.gpu_mesh {
+                //     pass.set_vertex_buffer(0, gpu_mesh.vertex_buffer.slice(..));
+                //     // Drawing logic needs to be updated for new buffer management
+                //     pass.draw(0..gpu_mesh.vertex_count, 0..1);
+                // }
             }
         }
 

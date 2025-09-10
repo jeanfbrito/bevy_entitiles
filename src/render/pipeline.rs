@@ -14,7 +14,6 @@ use bevy::{
             VertexStepMode,
         },
         renderer::RenderDevice,
-        texture::BevyDefault,
         view::ViewUniform,
     },
 };

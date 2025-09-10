@@ -1,6 +1,6 @@
 use bevy::{
     color::LinearRgba,
-    ecs::system::{ParallelCommands, Query},
+    ecs::system::{Commands, Query},
     math::IVec2,
     prelude::{Component, Entity},
     reflect::Reflect,
@@ -281,7 +281,7 @@ pub(crate) struct TileRearrange {
 }
 
 pub fn tile_updater(
-    commands: ParallelCommands,
+    mut commands: Commands,
     mut tiles_query: Query<(Entity, &mut Tile, &TileUpdater)>,
 ) {
     tiles_query
@@ -315,7 +315,7 @@ pub fn tile_updater(
 }
 
 pub(crate) fn tile_rearranger(
-    commands: ParallelCommands,
+    mut commands: Commands,
     mut tiles_query: Query<(Entity, &mut Tile, &TileRearrange)>,
 ) {
     tiles_query

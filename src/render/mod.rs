@@ -1,7 +1,6 @@
 use bevy::{
     app::{App, PostUpdate, Update},
     asset::load_internal_asset,
-    ecs::schedule::IntoSystemConfigs,
     prelude::{Handle, Plugin, Shader},
     render::{
         extract_instances::ExtractInstancesPlugin, mesh::MeshVertexAttribute,

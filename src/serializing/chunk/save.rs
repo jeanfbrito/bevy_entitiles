@@ -1,4 +1,4 @@
-use std::{collections::VecDeque, path::Path};
+use std::{collections::{HashMap, VecDeque}, path::Path};
 
 use bevy::{
     ecs::{
@@ -10,7 +10,6 @@ use bevy::{
     },
     math::{IVec2, UVec2},
     reflect::Reflect,
-    utils::HashMap,
 };
 
 use crate::{
@@ -172,7 +171,7 @@ pub fn save_color_layer(
 
                 if remove_after_save {
                     storage.remove_chunk(&mut commands, chunk_index);
-                    chunk_unload.send(ChunkUnload {
+                    chunk_unload.write(ChunkUnload {
                         tilemap: entity,
                         index: chunk_index,
                     });

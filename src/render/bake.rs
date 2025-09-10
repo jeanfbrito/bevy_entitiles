@@ -6,13 +6,13 @@ use bevy::{
         entity::Entity,
         system::{Commands, Query, Res},
     },
-    log::warn,
     math::{IRect, IVec2, UVec2, Vec2, Vec4, Vec4Swizzles},
+    prelude::warn,
     reflect::Reflect,
     render::{
         render_asset::RenderAssetUsages,
         render_resource::{Extent3d, TextureDimension, TextureFormat},
-        texture::{BevyDefault, Image},
+        texture::Image,
     },
 };
 

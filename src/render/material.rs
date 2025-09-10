@@ -5,7 +5,7 @@ use bevy::{
     asset::{Asset, AssetApp, AssetId},
     color::LinearRgba,
     core_pipeline::core_2d::Transparent2d,
-    ecs::{schedule::IntoSystemConfigs, system::SystemParamItem},
+    ecs::{system::SystemParamItem},
     prelude::{Deref, DerefMut},
     reflect::TypePath,
     render::{

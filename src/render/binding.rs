@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use bevy::{
     asset::{AssetId, Handle},
     ecs::entity::EntityHashMap,
@@ -9,7 +11,6 @@ use bevy::{
         texture::{FallbackImage, GpuImage},
         view::ViewUniforms,
     },
-    utils::HashMap,
 };
 
 use crate::{

@@ -3,9 +3,9 @@ use std::fmt::Formatter;
 use bevy::{
     ecs::system::EntityCommands,
     math::{IVec2, Vec2},
-    prelude::{Component, Deref, DerefMut},
+    prelude::{Component, Deref, DerefMut, GlobalTransform, Visibility, InheritedVisibility, ViewVisibility},
     reflect::Reflect,
-    sprite::{MaterialMesh2dBundle, Mesh2dHandle},
+    sprite::{Mesh2d, MeshMaterial2d},
 };
 use serde::{
     de::{IgnoredAny, Visitor},
@@ -567,11 +567,14 @@ impl<'de> Deserialize<'de> for TiledObjectInstance {
 impl TiledObjectInstance {
     pub fn spawn_sprite(&self, commands: &mut EntityCommands, tiled_assets: &TiledAssets) {
         if self.visible {
-            commands.insert(MaterialMesh2dBundle {
-                material: tiled_assets.clone_object_material_handle(self.id),
-                mesh: Mesh2dHandle(tiled_assets.clone_object_mesh_handle(self.id)),
-                ..Default::default()
-            });
+            commands.insert((
+                MeshMaterial2d(tiled_assets.clone_object_material_handle(self.id)),
+                Mesh2d(tiled_assets.clone_object_mesh_handle(self.id)),
+                GlobalTransform::default(),
+                Visibility::default(),
+                InheritedVisibility::default(),
+                ViewVisibility::default(),
+            ));
         }
     }
 
