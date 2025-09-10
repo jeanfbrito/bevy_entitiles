@@ -1,6 +1,5 @@
 use bevy::{
-    asset::Handle,
-    ecs::{bundle::Bundle, component::Component},
+    ecs::bundle::Bundle,
     render::view::{InheritedVisibility, ViewVisibility, Visibility},
 };
 
@@ -8,7 +7,7 @@ use crate::{
     render::material::{StandardTilemapMaterial, TilemapMaterial},
     tilemap::map::{
         TilePivot, TileRenderSize, TilemapAabbs, TilemapAnimations, TilemapAxisFlip,
-        TilemapLayerOpacities, TilemapMaterialHandle, TilemapName, TilemapSlotSize, TilemapStorage, TilemapTextures,
+        TilemapLayerOpacities, TilemapMaterialHandle, TilemapName, TilemapSlotSize, TilemapStorage,
         TilemapTexturesHandle, TilemapTransform, TilemapType, WaitForTextureUsageChange,
     },
 };

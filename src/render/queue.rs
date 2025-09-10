@@ -2,7 +2,7 @@ use bevy::{
     core_pipeline::core_2d::Transparent2d,
     ecs::query::With,
     math::FloatOrd,
-    prelude::{Entity, Msaa, Query, Res, ResMut},
+    prelude::{Entity, Query, Res, ResMut},
     render::{
         camera::ExtractedCamera,
         render_phase::{DrawFunctions, PhaseItemExtraIndex, ViewSortedRenderPhases},
@@ -18,7 +18,7 @@ use crate::render::{
 };
 
 pub fn queue_tilemaps<M: TilemapMaterial>(
-    mut views_query: Query<Entity, With<ExtractedCamera>>,
+    views_query: Query<Entity, With<ExtractedCamera>>,
     pipeline_cache: Res<PipelineCache>,
     draw_functions: Res<DrawFunctions<Transparent2d>>,
     mut sp_entitiles_pipeline: ResMut<SpecializedRenderPipelines<EntiTilesPipeline<M>>>,
@@ -29,8 +29,9 @@ pub fn queue_tilemaps<M: TilemapMaterial>(
     material_ids: Res<TilemapMaterialIds<M>>,
     #[cfg(target_arch = "wasm32")] render_device: Res<bevy::render::renderer::RenderDevice>,
 ) {
-    for view_entity in views_query.iter_mut() {
-        let Some(transparent_phase) = transparent_phase.get_mut(&view_entity) else {
+    for view_entity in views_query.iter() {
+        let view_key = bevy::render::view::RetainedViewEntity::new(bevy::render::extract_instances::MainEntity::from(view_entity), None, 0);
+        let Some(mut transparent_phase) = transparent_phase.get_mut(&view_key) else {
             continue;
         };
 

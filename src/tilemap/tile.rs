@@ -308,9 +308,7 @@ pub fn tile_updater(
             if let Some(color) = updater.tint {
                 tile.tint = color;
             }
-            commands.command_scope(|mut c| {
-                c.entity(entity).remove::<TileUpdater>();
-            });
+            commands.entity(entity).remove::<TileUpdater>();
         });
 }
 
@@ -323,8 +321,6 @@ pub(crate) fn tile_rearranger(
         .for_each(|(entity, mut tile, rearrange)| {
             tile.chunk_index = rearrange.chunk_index;
             tile.in_chunk_index = rearrange.in_chunk_index;
-            commands.command_scope(|mut c| {
-                c.entity(entity).remove::<TileRearrange>();
-            })
+            commands.entity(entity).remove::<TileRearrange>();
         });
 }

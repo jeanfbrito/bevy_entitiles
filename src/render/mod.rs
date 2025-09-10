@@ -80,7 +80,7 @@ impl Plugin for EntiTilesRendererPlugin {
             PostUpdate,
             cull::cull_tilemaps
                 .in_set(VisibilitySystems::CheckVisibility)
-                .after(bevy::render::view::check_visibility::<()>),
+                .after(bevy::render::view::check_visibility),
         )
         .init_resource::<FrustumCulling>()
         .init_resource::<RenderChunkSort>()
