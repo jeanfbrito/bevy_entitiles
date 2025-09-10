@@ -1,6 +1,7 @@
 use std::collections::{HashMap, HashSet};
 
 use bevy::{
+    image::BevyDefault,
     asset::{Assets, Handle},
     ecs::{
         entity::Entity,
@@ -60,7 +61,7 @@ pub fn set_texture_usage(
 ) {
     // Bevy doesn't set the `COPY_SRC` usage for images by default, so we need to do it manually.
     tilemaps_query.iter().for_each(|(entity, textures)| {
-        let Some(t) = &textures_assets.get(textures) else {
+        let Some(t) = &textures_assets.get(&**textures) else {
             panic!(
                 "Failed to fetch the TilemapTexture, did you forget to add that on your tilemap?"
             )
@@ -171,6 +172,7 @@ pub fn prepare_tilemap_textures(
             base_array_layer: 0,
             mip_level_count: None,
             array_layer_count: Some(tile_count),
+            usage: None,
         });
 
         let gpu_image = GpuImage {
@@ -179,7 +181,11 @@ pub fn prepare_tilemap_textures(
             texture,
             texture_view,
             sampler,
-            size: desc.tile_size,
+            size: Extent3d {
+                width: desc.tile_size.x,
+                height: desc.tile_size.y,
+                depth_or_array_layers: 1,
+            },
         };
 
         texture_storage

@@ -5,7 +5,7 @@ use bevy::{
     asset::{Asset, AssetApp, AssetId},
     color::LinearRgba,
     core_pipeline::core_2d::Transparent2d,
-    ecs::{component::Component, system::SystemParamItem},
+    ecs::{component::Component, system::SystemParamItem, schedule::IntoScheduleConfigs},
     prelude::{Deref, DerefMut},
     reflect::TypePath,
     render::{
@@ -24,6 +24,7 @@ use crate::render::{
     binding::{self, TilemapBindGroups},
     chunk::{self},
     draw::{DrawTilemapNonTextured, DrawTilemapTextured},
+    extract::ExtractedTilemapMaterial,
     pipeline::EntiTilesPipeline,
     prepare, queue,
 };
@@ -34,7 +35,7 @@ pub struct EntiTilesMaterialPlugin<M: TilemapMaterial>(PhantomData<M>);
 impl<M: TilemapMaterial> Plugin for EntiTilesMaterialPlugin<M> {
     fn build(&self, app: &mut App) {
         app.add_plugins((
-            ExtractInstancesPlugin::<AssetId<M>>::new(),
+            ExtractInstancesPlugin::<ExtractedTilemapMaterial<M>>::new(),
             RenderAssetPlugin::<ExtractedTilemapMaterialWrapper<M>>::default(),
         ))
         .init_asset::<M>();

@@ -79,11 +79,13 @@ pub fn queue_tilemaps<M: TilemapMaterial>(
 
             transparent_phase.add(Transparent2d {
                 sort_key: FloatOrd(tilemap.transform.z_index as f32),
-                entity: *entity,
+                entity: (**entity, *entity),
                 pipeline,
                 draw_function,
                 batch_range: 0..1,
-                extra_index: PhaseItemExtraIndex::NONE,
+                extracted_index: 0,
+                extra_index: PhaseItemExtraIndex::None,
+                indexed: true,
             });
         }
     }

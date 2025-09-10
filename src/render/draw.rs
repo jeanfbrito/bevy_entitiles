@@ -67,7 +67,7 @@ impl<const I: usize, M: TilemapMaterial> RenderCommand<Transparent2d>
     ) -> RenderCommandResult {
         if let (Some(tilemap_uniform_bind_group), Some(index)) = (
             bind_groups.into_inner().uniform_buffer.as_ref(),
-            tilemap_buffers.shared.indices.get(&item.entity),
+            tilemap_buffers.shared.indices.get(&item.entity.0),
         ) {
             pass.set_bind_group(
                 I,
@@ -77,11 +77,11 @@ impl<const I: usize, M: TilemapMaterial> RenderCommand<Transparent2d>
             RenderCommandResult::Success
         } else {
             warn!(
-                "Failed to draw tilemap {}: Failed to get tilemap uniform bind group! \
+                "Failed to draw tilemap {:?}: Failed to get tilemap uniform bind group! \
                 Skipping rendering this frame.",
                 item.entity
             );
-            RenderCommandResult::Failure
+            RenderCommandResult::Skip
         }
     }
 }
@@ -106,18 +106,18 @@ impl<const I: usize, M: TilemapMaterial> RenderCommand<Transparent2d>
         pass: &mut TrackedRenderPass<'w>,
     ) -> RenderCommandResult {
         if let Some(bind_group) = material_ids
-            .get(&item.entity)
-            .and_then(|id| bind_groups.into_inner().materials.get(id))
+            .get(&item.entity.1)
+            .and_then(|id| bind_groups.into_inner().materials.get(&id.asset_id))
         {
             pass.set_bind_group(I, bind_group, &[]);
             RenderCommandResult::Success
         } else {
             warn!(
-                "Failed to draw tilemap {}: Failed to get material bind group! \
+                "Failed to draw tilemap {:?}: Failed to get material bind group! \
                 Skipping rendering this frame.",
                 item.entity
             );
-            RenderCommandResult::Failure
+            RenderCommandResult::Skip
         }
     }
 }
@@ -141,7 +141,7 @@ impl<const I: usize, M: TilemapMaterial> RenderCommand<Transparent2d>
         bind_groups: SystemParamItem<'w, '_, Self::Param>,
         pass: &mut TrackedRenderPass<'w>,
     ) -> RenderCommandResult {
-        if let Some(bind_group) = bind_groups.into_inner().array_buffers.get(&item.entity) {
+        if let Some(bind_group) = bind_groups.into_inner().array_buffers.get(&item.entity.0) {
             #[cfg(target_arch = "wasm32")]
             pass.set_bind_group(I, bind_group, &[0, 0]);
             #[cfg(not(target_arch = "wasm32"))]
@@ -149,11 +149,11 @@ impl<const I: usize, M: TilemapMaterial> RenderCommand<Transparent2d>
             RenderCommandResult::Success
         } else {
             warn!(
-                "Failed to draw tilemap {}: Failed to get storage bind group! \
+                "Failed to draw tilemap {:?}: Failed to get storage bind group! \
                 Skipping rendering this frame.",
                 item.entity
             );
-            RenderCommandResult::Failure
+            RenderCommandResult::Skip
         }
     }
 }
@@ -178,15 +178,15 @@ impl<const I: usize, M: TilemapMaterial> RenderCommand<Transparent2d>
         pass: &mut TrackedRenderPass<'w>,
     ) -> RenderCommandResult {
         let Some(textures) = instances
-            .get(&item.entity)
+            .get(&item.entity.1)
             .and_then(|inst| inst.texture.as_ref())
         else {
             warn!(
-                "Failed to draw tilemap {}: Failed to get tilemap instance. \
+                "Failed to draw tilemap {:?}: Failed to get tilemap instance. \
                 Skipping rendering this frame.",
                 item.entity
             );
-            return RenderCommandResult::Failure;
+            return RenderCommandResult::Skip;
         };
 
         if let Some(bind_group) = &bind_groups.into_inner().textures.get(textures) {
@@ -194,11 +194,11 @@ impl<const I: usize, M: TilemapMaterial> RenderCommand<Transparent2d>
             RenderCommandResult::Success
         } else {
             warn!(
-                "Failed to draw tilemap {}: Failed to get color texture bind group! \
+                "Failed to draw tilemap {:?}: Failed to get color texture bind group! \
                 Skipping rendering this frame.",
                 item.entity
             );
-            RenderCommandResult::Failure
+            RenderCommandResult::Skip
         }
     }
 }
@@ -220,7 +220,7 @@ impl<M: TilemapMaterial> RenderCommand<Transparent2d> for DrawTileMesh<M> {
         render_chunks: SystemParamItem<'w, '_, Self::Param>,
         pass: &mut TrackedRenderPass<'w>,
     ) -> RenderCommandResult {
-        if let Some(chunks) = render_chunks.into_inner().get_chunks(item.entity) {
+        if let Some(chunks) = render_chunks.into_inner().get_chunks(item.entity.0) {
             for chunk in chunks.value.values() {
                 if !chunk.visible {
                     continue;

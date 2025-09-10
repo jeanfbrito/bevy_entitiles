@@ -93,11 +93,11 @@ pub fn prepare_tilemap_buffers(
             },
             time: time.elapsed_secs(),
         });
-        tilemap_buffers.shared.indices.insert(*entity, index);
+        tilemap_buffers.shared.indices.insert(**entity, index);
 
         let unshared = tilemap_buffers
             .unshared
-            .entry(*entity)
+            .entry(**entity)
             .or_insert_with(|| UnsharedTilemapBuffers::new(&render_device));
         if let Some(anim) = &tilemap.changed_animations {
             for data in &anim.0 {

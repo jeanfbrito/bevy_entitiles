@@ -188,7 +188,7 @@ impl TilemapRenderChunk {
 
         let vertex_buffer = render_device.create_buffer_with_data(&BufferInitDescriptor {
             label: Some("tilemap_vertex_buffer"),
-            contents: &self.mesh.get_vertex_buffer_data(),
+            contents: &self.mesh.create_packed_vertex_buffer_data(),
             usage: BufferUsages::VERTEX,
         });
 
@@ -370,7 +370,7 @@ pub fn prepare_chunks<M: TilemapMaterial>(
     mut render_chunks: ResMut<RenderChunkStorage>,
 ) {
     for tilemap in tilemap_instances.keys() {
-        if let Some(chunks) = render_chunks.value.get_mut(tilemap) {
+        if let Some(chunks) = render_chunks.value.get_mut(&**tilemap) {
             chunks
                 .value
                 .values_mut()

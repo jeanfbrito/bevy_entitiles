@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use bevy::{
     asset::{AssetId, Handle},
-    ecs::entity::EntityHashMap,
+    ecs::{entity::EntityHashMap, system::SystemParamItem},
     prelude::{Res, ResMut, Resource},
     render::{
         render_asset::RenderAssets,
@@ -52,7 +52,7 @@ pub fn bind_tilemap_buffers<M: TilemapMaterial>(
     }
 
     for tilemap in tilemap_instances.keys() {
-        let Some(buffers) = tilemap_buffers.unshared.get(tilemap) else {
+        let Some(buffers) = tilemap_buffers.unshared.get(&**tilemap) else {
             continue;
         };
 
@@ -66,7 +66,7 @@ pub fn bind_tilemap_buffers<M: TilemapMaterial>(
         };
 
         bind_groups.array_buffers.insert(
-            *tilemap,
+            **tilemap,
             render_device.create_bind_group(
                 "tilemap_storage_buffers_bind_group",
                 &entitiles_pipeline.array_buffers_layout,

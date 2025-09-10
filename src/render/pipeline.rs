@@ -1,6 +1,7 @@
 use std::marker::PhantomData;
 
 use bevy::{
+    image::BevyDefault,
     asset::{AssetServer, Handle},
     ecs::world::World,
     prelude::{FromWorld, Resource},
@@ -216,6 +217,7 @@ impl<M: TilemapMaterial> SpecializedRenderPipeline for EntiTilesPipeline<M> {
                 mask: !0,
                 alpha_to_coverage_enabled: false,
             },
+            zero_initialize_workgroup_memory: false,
         };
 
         M::specialize(&mut desc);
