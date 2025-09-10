@@ -202,7 +202,9 @@ impl RenderAsset for TilemapTextures {
 
     fn prepare_asset(
         source_asset: Self::SourceAsset,
+        _asset_id: bevy::asset::AssetId<TilemapTextures>,
         _param: &mut SystemParamItem<Self::Param>,
+        _render_device: &bevy::render::renderer::RenderDevice,
     ) -> Result<Self, PrepareAssetError<Self::SourceAsset>> {
         Ok(source_asset)
     }

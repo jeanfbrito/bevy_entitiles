@@ -23,7 +23,7 @@ use crate::{
         despawn::{DespawnedTile, DespawnedTilemap},
         map::{
             TilePivot, TileRenderSize, TilemapAnimations, TilemapAxisFlip, TilemapLayerOpacities,
-            TilemapName, TilemapSlotSize, TilemapStorage, TilemapTextures, TilemapTransform,
+            TilemapName, TilemapSlotSize, TilemapStorage, TilemapTextures, TilemapTexturesHandle, TilemapTransform,
             TilemapType,
         },
         tile::Tile,
@@ -60,7 +60,7 @@ impl ExtractInstance for ExtractedTilemap {
         Read<TilemapTransform>,
         Read<TilemapAxisFlip>,
         Read<TilemapStorage>,
-        Option<Read<Handle<TilemapTextures>>>,
+        Option<Read<TilemapTexturesHandle>>,
         Option<Ref<'static, TilemapAnimations>>,
     );
 
@@ -97,7 +97,7 @@ impl ExtractInstance for ExtractedTilemap {
             layer_opacities: layer_opacities.0,
             transform: *transform,
             axis_flip: *axis_flip,
-            texture: texture.cloned(),
+            texture: texture.as_ref().map(|h| h.0.clone()),
             changed_animations: animations
                 .as_ref()
                 .is_some_and(|a| a.is_changed())
