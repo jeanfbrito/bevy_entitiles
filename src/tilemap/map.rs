@@ -259,7 +259,7 @@ impl TilemapTextures {
 }
 
 /// Component wrapper for Handle<TilemapTextures> to make it compatible with Bevy 0.16
-#[derive(Component, Debug, Clone)]
+#[derive(Component, Debug, Clone, Default)]
 pub struct TilemapTexturesHandle(pub Handle<TilemapTextures>);
 
 impl From<Handle<TilemapTextures>> for TilemapTexturesHandle {
@@ -279,6 +279,12 @@ impl std::ops::Deref for TilemapTexturesHandle {
 /// Component wrapper for Handle<M> to make it compatible with Bevy 0.16
 #[derive(Component, Debug, Clone)]
 pub struct TilemapMaterialHandle<M: Asset>(pub Handle<M>);
+
+impl<M: Asset> Default for TilemapMaterialHandle<M> {
+    fn default() -> Self {
+        Self(Handle::default())
+    }
+}
 
 impl<M: Asset> From<Handle<M>> for TilemapMaterialHandle<M> {
     fn from(handle: Handle<M>) -> Self {

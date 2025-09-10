@@ -30,7 +30,8 @@ pub fn queue_tilemaps<M: TilemapMaterial>(
     #[cfg(target_arch = "wasm32")] render_device: Res<bevy::render::renderer::RenderDevice>,
 ) {
     for view_entity in views_query.iter() {
-        let view_key = bevy::render::view::RetainedViewEntity::new(bevy::render::extract_instances::MainEntity::from(view_entity), None, 0);
+        let main_entity = bevy::render::sync_world::MainEntity::from(view_entity);
+        let view_key = bevy::render::view::RetainedViewEntity::new(main_entity, None, 0);
         let Some(mut transparent_phase) = transparent_phase.get_mut(&view_key) else {
             continue;
         };

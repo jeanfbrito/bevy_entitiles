@@ -127,7 +127,7 @@ impl From<&StandardTilemapMaterial> for StandardTilemapUniform {
     }
 }
 
-#[derive(Default, Asset, AsBindGroup, TypePath, Clone, Component)]
+#[derive(Default, Asset, AsBindGroup, TypePath, Clone, Component, Debug)]
 #[cfg_attr(feature = "serializing", derive(serde::Serialize, serde::Deserialize))]
 #[uniform(0, StandardTilemapUniform)]
 pub struct StandardTilemapMaterial {
