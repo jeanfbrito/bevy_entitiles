@@ -3,16 +3,15 @@ use std::{collections::HashMap, path::Path};
 use bevy::{
     asset::{io::Reader, Asset, AssetId, AssetLoader, AssetServer, Assets, Handle, LoadContext},
     ecs::entity::Entity,
-    prelude::Resource,
     math::{IVec2, UVec2, Vec2},
-    prelude::{Deref, DerefMut, EventWriter, error},
+    prelude::{Deref, DerefMut, EventWriter, error, Resource, TextureAtlasLayout},
     reflect::Reflect,
     render::{
         mesh::{Indices, Mesh},
         render_asset::RenderAssetUsages,
         render_resource::{FilterMode, PrimitiveTopology},
     },
-    sprite::{Sprite, TextureAtlasLayout},
+    sprite::Sprite,
 };
 use futures_lite::AsyncReadExt;
 use thiserror::Error;
