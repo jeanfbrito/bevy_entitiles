@@ -25,7 +25,7 @@ use crate::{
 };
 
 #[cfg(feature = "physics")]
-use avian2d::collision::Collider;
+use avian2d::prelude::Collider;
 
 #[cfg(feature = "physics")]
 use std::f32::consts::PI;

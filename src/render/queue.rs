@@ -23,7 +23,7 @@ pub fn queue_tilemaps<M: TilemapMaterial>(
     draw_functions: Res<DrawFunctions<Transparent2d>>,
     mut sp_entitiles_pipeline: ResMut<SpecializedRenderPipelines<EntiTilesPipeline<M>>>,
     entitiles_pipeline: Res<EntiTilesPipeline<M>>,
-    msaa: Res<Msaa>,
+    // msaa: Res<Msaa>, // TODO: MSAA changed in Bevy 0.16 - needs to be extracted from camera
     tilemap_instances: Res<TilemapInstances>,
     mut transparent_phase: ResMut<ViewSortedRenderPhases<Transparent2d>>,
     material_ids: Res<TilemapMaterialIds<M>>,
@@ -47,7 +47,7 @@ pub fn queue_tilemaps<M: TilemapMaterial>(
                     &pipeline_cache,
                     &entitiles_pipeline,
                     EntiTilesPipelineKey {
-                        msaa: msaa.samples(),
+                        msaa: 1, // TODO: Extract MSAA from camera in Bevy 0.16
                         map_type: tilemap.ty,
                         is_pure_color: tilemap.texture.is_none(),
                         #[cfg(target_arch = "wasm32")]
