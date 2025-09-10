@@ -91,7 +91,7 @@ pub fn prepare_tilemap_buffers(
                 TilemapType::Hexagonal(legs) => legs as f32,
                 _ => 0.,
             },
-            time: time.elapsed_seconds(),
+            time: time.elapsed_secs(),
         });
         tilemap_buffers.shared.indices.insert(*entity, index);
 

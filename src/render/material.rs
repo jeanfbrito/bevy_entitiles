@@ -110,7 +110,6 @@ where
         source_asset: Self::SourceAsset,
         _asset_id: AssetId<M>,
         _param: &mut SystemParamItem<Self::Param>,
-        _render_device: &bevy::render::renderer::RenderDevice,
     ) -> Result<Self, PrepareAssetError<Self::SourceAsset>> {
         Ok(ExtractedTilemapMaterialWrapper(source_asset))
     }

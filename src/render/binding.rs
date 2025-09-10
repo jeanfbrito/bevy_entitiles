@@ -89,8 +89,8 @@ pub fn bind_materials<M: TilemapMaterial>(
     mut bind_groups: ResMut<TilemapBindGroups<M>>,
     material_assets: Res<RenderAssets<ExtractedTilemapMaterialWrapper<M>>>,
 ) {
-    for id in material_ids.values() {
-        if let Some(material) = material_assets.get(*id) {
+    for material_info in material_ids.values() {
+        if let Some(material) = material_assets.get(material_info.asset_id) {
             let bind_group = material
                 .as_bind_group(
                     &pipeline.material_layout,
@@ -99,7 +99,7 @@ pub fn bind_materials<M: TilemapMaterial>(
                     &fallback_image,
                 )
                 .unwrap();
-            bind_groups.materials.insert(*id, bind_group.bind_group);
+            bind_groups.materials.insert(material_info.asset_id, bind_group.bind_group);
         }
     }
 }

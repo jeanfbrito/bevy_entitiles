@@ -1,7 +1,7 @@
 use std::{collections::{HashMap, HashSet}, f32::consts::SQRT_2, fmt::Debug};
 
 use bevy::{
-    asset::{Asset, Handle},
+    asset::{Asset, AssetId, Handle},
     ecs::{
         component::Component,
         query::Changed,
@@ -202,9 +202,8 @@ impl RenderAsset for TilemapTextures {
 
     fn prepare_asset(
         source_asset: Self::SourceAsset,
-        _asset_id: bevy::asset::AssetId<TilemapTextures>,
+        _asset_id: AssetId<TilemapTextures>,
         _param: &mut SystemParamItem<Self::Param>,
-        _render_device: &bevy::render::renderer::RenderDevice,
     ) -> Result<Self, PrepareAssetError<Self::SourceAsset>> {
         Ok(source_asset)
     }
@@ -271,6 +270,24 @@ impl From<Handle<TilemapTextures>> for TilemapTexturesHandle {
 
 impl std::ops::Deref for TilemapTexturesHandle {
     type Target = Handle<TilemapTextures>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+/// Component wrapper for Handle<M> to make it compatible with Bevy 0.16
+#[derive(Component, Debug, Clone)]
+pub struct TilemapMaterialHandle<M: Asset>(pub Handle<M>);
+
+impl<M: Asset> From<Handle<M>> for TilemapMaterialHandle<M> {
+    fn from(handle: Handle<M>) -> Self {
+        Self(handle)
+    }
+}
+
+impl<M: Asset> std::ops::Deref for TilemapMaterialHandle<M> {
+    type Target = Handle<M>;
 
     fn deref(&self) -> &Self::Target {
         &self.0

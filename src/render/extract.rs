@@ -32,7 +32,26 @@ use crate::{
 
 pub type TilemapInstances = ExtractedInstances<ExtractedTilemap>;
 
-pub type TilemapMaterialIds<M> = ExtractedInstances<AssetId<M>>;
+#[derive(Component, Debug, Clone)]
+pub struct ExtractedTilemapMaterial<M: bevy::asset::Asset> {
+    pub asset_id: AssetId<M>,
+}
+
+impl<M> ExtractInstance for ExtractedTilemapMaterial<M>
+where
+    M: bevy::asset::Asset + Send + Sync + 'static,
+{
+    type QueryData = Read<crate::tilemap::map::TilemapMaterialHandle<M>>;
+    type QueryFilter = ();
+
+    fn extract(item: QueryItem<'_, Self::QueryData>) -> Option<Self> {
+        Some(ExtractedTilemapMaterial {
+            asset_id: item.id(),
+        })
+    }
+}
+
+pub type TilemapMaterialIds<M> = ExtractedInstances<ExtractedTilemapMaterial<M>>;
 
 #[derive(Component, Debug)]
 pub struct ExtractedTilemap {

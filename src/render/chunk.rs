@@ -360,7 +360,7 @@ impl RenderChunkStorage {
 
     #[inline]
     pub fn sort(&mut self, f: impl Fn(IVec2, IVec2) -> Ordering + Sync + Send + Copy) {
-        self.value.par_values_mut().for_each(|c| c.try_sort(f));
+        self.value.values_mut().for_each(|c| c.try_sort(f));
     }
 }
 

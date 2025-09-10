@@ -8,7 +8,7 @@ use crate::{
     render::material::{StandardTilemapMaterial, TilemapMaterial},
     tilemap::map::{
         TilePivot, TileRenderSize, TilemapAabbs, TilemapAnimations, TilemapAxisFlip,
-        TilemapLayerOpacities, TilemapName, TilemapSlotSize, TilemapStorage, TilemapTextures,
+        TilemapLayerOpacities, TilemapMaterialHandle, TilemapName, TilemapSlotSize, TilemapStorage, TilemapTextures,
         TilemapTexturesHandle, TilemapTransform, TilemapType, WaitForTextureUsageChange,
     },
 };
@@ -47,10 +47,7 @@ impl Into<StandardTilemapBundle> for DataTilemapBundle {
 
 /// The bundle of the tilemap with a texture and custom material.
 #[derive(Bundle, Default, Debug, Clone)]
-pub struct MaterialTilemapBundle<M: TilemapMaterial>
-where
-    Handle<M>: Component,
-{
+pub struct MaterialTilemapBundle<M: TilemapMaterial> {
     pub name: TilemapName,
     pub tile_render_size: TileRenderSize,
     pub slot_size: TilemapSlotSize,
@@ -60,7 +57,7 @@ where
     pub storage: TilemapStorage,
     pub transform: TilemapTransform,
     pub axis_flip: TilemapAxisFlip,
-    pub material: Handle<M>,
+    pub material: TilemapMaterialHandle<M>,
     pub textures: TilemapTexturesHandle,
     pub animations: TilemapAnimations,
     pub visibility: Visibility,
@@ -82,7 +79,7 @@ pub struct StandardTilemapBundle {
     pub storage: TilemapStorage,
     pub transform: TilemapTransform,
     pub axis_flip: TilemapAxisFlip,
-    pub material: Handle<StandardTilemapMaterial>,
+    pub material: TilemapMaterialHandle<StandardTilemapMaterial>,
     pub textures: TilemapTexturesHandle,
     pub animations: TilemapAnimations,
     pub visibility: Visibility,
@@ -130,10 +127,7 @@ impl Into<StandardPureColorTilemapBundle> for StandardTilemapBundle {
 /// The bundle of the tilemap without a texture and with a custom material.
 /// This can be cheaper.
 #[derive(Bundle, Default, Debug, Clone)]
-pub struct PureColorTilemapBundle<M: TilemapMaterial>
-where
-    Handle<M>: Component,
-{
+pub struct PureColorTilemapBundle<M: TilemapMaterial> {
     pub name: TilemapName,
     pub tile_render_size: TileRenderSize,
     pub slot_size: TilemapSlotSize,
@@ -143,7 +137,7 @@ where
     pub storage: TilemapStorage,
     pub transform: TilemapTransform,
     pub axis_flip: TilemapAxisFlip,
-    pub material: Handle<M>,
+    pub material: TilemapMaterialHandle<M>,
     pub visibility: Visibility,
     pub inherited_visibility: InheritedVisibility,
     pub view_visibility: ViewVisibility,
@@ -163,7 +157,7 @@ pub struct StandardPureColorTilemapBundle {
     pub storage: TilemapStorage,
     pub transform: TilemapTransform,
     pub axis_flip: TilemapAxisFlip,
-    pub material: Handle<StandardTilemapMaterial>,
+    pub material: TilemapMaterialHandle<StandardTilemapMaterial>,
     pub visibility: Visibility,
     pub inherited_visibility: InheritedVisibility,
     pub view_visibility: ViewVisibility,
